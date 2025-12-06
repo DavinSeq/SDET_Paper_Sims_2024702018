@@ -10,8 +10,8 @@ We compare two decision rules for detecting a single mean shift:
 - **Naive rule**: detect a change if `SIC(two-segment) <= SIC(single-segment)`.
 - **Critical rule**: detect a change if `SIC(two-segment) + c_t <= SIC(single-segment)`,
 
-where `c_t` is a Monte Carlo–calibrated critical value that controls false
-detections.
+where `c_t` is a Monte Carlo–calibrated critical value that controls false detections. 
+It is apporximated by a closed-form expression that is used to generate a lookup table (code provided)
 
 The methods are tested both under:
 - a **true change-point model** (for hitrate / power), and
@@ -30,14 +30,7 @@ The methods are tested both under:
 
 ## Requirements
 
-- MATLAB (tested with R20xx)
+- MATLAB (tested with R2025a)
 - CSV files in `data/`:
   - `ar2_data.csv` (AR(2) null data)
   - `delta_*.csv` for each shift size δ used in the hitrate simulation.
-
-## Usage
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/climate-changepoint-sic.git
-   cd climate-changepoint-sic
