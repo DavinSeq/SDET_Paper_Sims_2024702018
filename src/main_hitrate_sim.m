@@ -43,7 +43,7 @@ title('Original vs Critical Hitrate for Different \delta');
 grid on;
 legend('show', 'Location', 'bestoutside');
 
-figname = sprintf('hitrate_sim_%.1f.', alpha);
+figname = sprintf('hitrate_sim_%.1f.png', alpha);
 saveas(gcf, fullfile('..','figs',figname));
 
 hold off;
