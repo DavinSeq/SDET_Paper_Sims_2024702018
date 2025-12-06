@@ -1,7 +1,9 @@
 # Climate Change-Point Detection with SIC/BIC
 
-This repository contains MATLAB code and LaTeX material for a term paper on
-SIC/BIC-based change-point detection applied to climate-like time series.
+This repository contains MATLAB code and LaTeX material for our term paper on SIC/BIC-based change-point detection applied to climate-like time series.
+Authors are:
+Davin Sequeira
+Manne Sai Bhargav
 
 ## Overview
 
