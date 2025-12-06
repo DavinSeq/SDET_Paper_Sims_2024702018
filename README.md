@@ -1,41 +1,25 @@
-# Climate Change-Point Detection with SIC/BIC
+# SIC-Based Change-Point Detection for Climate Time Series  
+### Simulation Code for SDET Term Paper (2024–2025)
 
-This repository contains MATLAB code and LaTeX material for our term paper on SIC/BIC-based change-point detection applied to climate-like time series.
+This repository contains all MATLAB code, data generators, and analysis scripts used in the term paper *“SIC-Based Change-Point Detection in Climate Time Series”*.  
+The project evaluates two decision rules—**Naive SIC** and the **Critical bias-corrected SIC rule**—on synthetic climate-like datasets, including AR(2) noise processes and controlled mean-shift experiments.
 
-Authors are:
+---
 
-Davin Sequeira
+## 📌 Introduction
 
-Manne Sai Bhargav
+Detecting structural breaks in climate time series is essential for identifying abrupt changes in environmental regimes, such as shifts in atmospheric CO₂, radiocarbon activity, or regional temperature dynamics. These datasets often evolve slowly but may experience sudden transitions driven by natural variability or anthropogenic forcing. Simple visual inspection or classical trend analysis often fails to separate gradual fluctuations from genuine structural changes. This motivates the use of formal statistical change-point methods.
 
-## Overview
+A principled approach to change-point detection uses the **Schwarz Information Criterion (SIC/BIC)** to compare a no-change (single-segment) model against a one-change (two-segment) model. A change is detected when the penalized likelihood of the two-segment model sufficiently improves over the null. However, climate time series frequently exhibit autocorrelation, which can distort SIC-based inference and inflate false detections if ignored.
 
-We compare two decision rules for detecting a single mean shift:
+This project adopts an SIC-based methodology adapted for climate-like dependence structures. Simulated datasets include mean-shifted Gaussian series and AR(2) autoregressive series without changes. Two decision rules are studied:
 
-- **Naive rule**: detect a change if `SIC(two-segment) <= SIC(single-segment)`.
-- **Critical rule**: detect a change if `SIC(two-segment) + c_t <= SIC(single-segment)`,
+- **Naive SIC Rule:** Direct comparison of SIC(no-change) vs SIC(two-segment).  
+- **Critical Rule:** A corrected rule using a Monte-Carlo-calibrated threshold \(c_t\) to reduce false positives.
 
-where `c_t` is a Monte Carlo–calibrated critical value that controls false detections. 
-It is apporximated by a closed-form expression that is used to generate a lookup table (code provided)
+Extensive Monte-Carlo experiments evaluate hitrates, false-detection rates, detection delay, and asymptotic convergence, providing practical insights into the reliability of SIC-based change-point detection when applied to autocorrelated climate data.
 
-The methods are tested both under:
-- a **true change-point model** (for hitrate / power), and
-- an **AR(2) no-change model** (for false detection / Type-I error).
+---
 
-## Repository Structure
+I have attached a guide to how to run the simulations systematically in Simulations.md
 
-- `src/` – MATLAB source code
-  - `main_hitrate_sim.m`: runs hitrate simulations and plots original vs critical hitrates for different δ.
-  - `main_false_detection.m`: runs false-detection simulations over multiple window lengths.
-  - `compute_hitrate_both.m`: function that computes hitrate for Naive and Critical rules.
-  - `histogram_gen.m`: function that computes false-detection histograms.
-- `data/` – input CSV files (`ar2_data.csv`, `delta_*.csv`, etc.)
-- `figs/` – saved figures (PNG/PDF) from the simulations.
-- `paper/` – LaTeX term paper and bibliography.
-
-## Requirements
-
-- MATLAB (tested with R2025a)
-- CSV files in `data/`:
-  - `ar2_data.csv` (AR(2) null data)
-  - `delta_*.csv` for each shift size δ used in the hitrate simulation.
