@@ -1,37 +1,36 @@
 clc;
-clear;
+clear all;
 close all;
 
-n_samples = 20000;     % Number of simulated time series
-Nmax      = 140;       % Maximum time length
-sigma     = 1;         % Standard Deviation
-mu        = 0;         % Mean of AR(2) data
-phi1      = 1.6;       % AR(2) Coefficient for i-1th data
-phi2      = -0.65;     % AR(2) Coefficient for i-2th data
+rows  = 20000;   % Number of series
+cols  = 140;     % Length of each series
+phi1  = 1.0;     % AR(2) coefficient for x_{t-1}
+phi2  = -0.5;    % AR(2) coefficient for x_{t-2}
+sigma = 1;       % Innovation standard deviation
+mu    = 0;       % Mean (no change point)
 
-data_array = zeros(n_samples, Nmax);
+data = zeros(rows, cols);
 
-for col = 1:Nmax
-
-    eps = sigma * randn(n_samples, 1);
-    x   = zeros(n_samples, 1);
+for r = 1:rows
+    eps = sigma * randn(1, cols);
+    x   = zeros(1, cols);
 
     x(1) = mu + eps(1);
-    if n_samples >= 2
-        x(2) = mu + phi1*(x(1)-mu) + eps(2);
+    if cols >= 2
+        x(2) = mu + phi1*(x(1) - mu) + eps(2);
     end
 
-    for t = 3:n_samples
+    for t = 3:cols
         x(t) = mu ...
              + phi1*(x(t-1) - mu) ...
              + phi2*(x(t-2) - mu) ...
              + eps(t);
     end
 
-    data_array(:, col) = x;
+    data(r, :) = x;
 end
 
-outfile = fullfile('../data', 'ar2_data.csv');    % Filename for data storage as .csv
-writematrix(data_array, outfile);
+outfile = fullfile('../data', 'ar2_data.csv');
+writematrix(data, outfile);
 
 fprintf('AR(2) dataset successfully saved to %s\n', outfile);
